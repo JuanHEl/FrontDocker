@@ -1,6 +1,7 @@
 <template>
     <div id="logs">
         <b-table
+        style="height:100%;"
         responsive
         sticky-header
         id="tablalogs"

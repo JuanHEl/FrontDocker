@@ -1,7 +1,8 @@
 <template>
-    <div id="logs">
+    <div align="center">
         <b-table
         responsive
+        sticky-header
         id="tablalogs"
         striped
         hover
@@ -73,12 +74,9 @@ export default {
 </script>
 
 <style>
-#logs {
-    display: flex;    
-}
 #tablalogs {
     color: black;
-    width: 70%;
+    width: 100%;
     margin: 2px;
     background-color: whitesmoke;
 }

@@ -1,10 +1,22 @@
 <template>
         <div id="admins">
             <div>
+                <b-table
+                style="width:82%; height:100%;"
+                responsive
+                sticky-header
+                id="tablalogs"
+                striped
+                hover
+                :items="items"
+                :fields="fields"
+                ></b-table>
+            </div>
+            <!-- <div> -->
             <!-- <Header/>
             <Navbar/> -->
-            <div class="container" style="width:100%; height:50%; overflow-y:scroll">
-            <table class="table table-hover">
+            <!-- <div class="container" style="width:100%; height:50%; overflow-y:scroll"> -->
+            <!-- <table class="table table-hover">
                 <thead>
                 <tr class="text-white">
                     <th scope="col">Nombre Administrator</th>
@@ -29,10 +41,10 @@
                     <td>{{ admin.Id_Tipo_Admin[0].Nom_Tipo_Admin }}</td>
                 </tr>
                 </tbody>
-            </table>
+            </table> -->
             <!-- <b-button variant="primary" to="/nuevoadmin"> Nuevo Administrador </b-button> -->
-            </div>
-            </div>
+            <!-- </div> -->
+            <!-- </div> -->
         <div id="botones">
             <div>
                 <b-input-group>
@@ -49,6 +61,7 @@
                         />
                 </b-input-group>
                 <p></p>
+                <h1 v-if="tareaa.length==0" class="text-white">No tienes permisos para modificar</h1>
                 <div v-for="(tarea,index) in tareaa" :key="index">
                 <!-- <h1>{{tarea}}</h1> -->
                     <b-button v-if="tarea==4" block class="buttons" pill variant="primary" to="/nuevoadmin" font-scale="3"> Agregar Nuevo Administrador</b-button>
@@ -88,7 +101,40 @@ export default {
             },
             Listaadmins: null,
             tareaa:[],
-            logs:[]
+            logs:[],
+            fields: [
+                {
+                key: "Nombre_Admin",
+                label: "Nombre Administrator",
+                sortable: false,
+                },
+                {
+                key: "Nombre_Usuario",
+                label: "Nombre Usuario",
+                sortable: false,
+                },
+                {
+                key: "Apellido_P_Admin",
+                label: "Apellido Paterno",
+                sortable: false,
+                },
+                {
+                key: "Apellido_M_Admin",
+                label: "Apellido Materno",
+                sortable: false,
+                },
+                {
+                key: "Id_Status_Admin[0].Nom_Tipo_Admin",
+                label: "Status Admin",
+                sortable: false,
+                },
+                {
+                key: "Id_Tipo_Admin[0].Nom_Tipo_Admin",
+                label: "Tipo Admin",
+                sortable: false,
+                }
+            ],
+            items: []
         };
     },
     methods: {
@@ -122,6 +168,7 @@ export default {
             // console.log(data);
             this.Listaadmins = data.data;
             this.logs = this.Listaadmins;
+            this.items =this.logs;
         });
     },
     beforeMount: function () {

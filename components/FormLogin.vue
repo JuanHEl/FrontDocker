@@ -12,6 +12,7 @@
                     <b-button class="btn btn-primary" variant="primary" type="submit">Iniciar sesión</b-button>
                 </b-form>
             </b-card>
+                <p style="color:white">v1.0.0 SNC by JAJ | 2021-2022</p>
         </div>
     </div>
 </template>
@@ -80,7 +81,7 @@ export default {
                     }
                 });
             }
-            this.$router.push("/admins");
+            this.$router.push("/resumen");
         },
         makeToast(variant = null) {
         this.$bvToast.toast(this.mensaje, {

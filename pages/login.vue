@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <div class="logo drop">
-      <h1 class="text-white">Bienvenido al Sistema</h1>
+      <h1 class="text-white">Bienvenido a SoNetCo</h1>
+      <!-- <h1 class="text-white"></h1> -->
       <b-img src="../assets/logo.png"></b-img>
     </div>
     <div class=" login drop">

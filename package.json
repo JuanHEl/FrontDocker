@@ -19,8 +19,10 @@
     "nuxt-universal-cookies": "0.0.5",
     "v-idle": "^0.2.1",
     "vue": "^2.6.14",
+    "vue-ip": "^2.0.2",
     "vue-server-renderer": "^2.6.14",
     "vue-template-compiler": "^2.6.14",
+    "vue-time": "^0.1.4",
     "vuetify": "^2.6.0",
     "webpack": "^4.46.0"
   },

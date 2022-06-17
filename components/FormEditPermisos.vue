@@ -99,7 +99,8 @@ export default {
             form: {
                 id: "",
             },
-            tareaa:[]
+            tareaa:[],
+            mensaje:null
         };
     },
     components: {
@@ -157,6 +158,14 @@ export default {
             // console.log(data);
             });
         },
+        makeToast(variant = null) {
+        this.$bvToast.toast(this.mensaje, {
+            title: "Mensaje",
+            variant: variant,
+            solid: true,
+            delay: 2000 
+        })
+        }
     },
     watch: {
         selected(newValue, oldValue) {

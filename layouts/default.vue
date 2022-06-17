@@ -1,10 +1,68 @@
 <template>
-  <div class="header">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <ul class="navbar-nav mr-auto my-2 my-lg-0">
-        <div class="my-2">
-          <h4 style="color:white" v-if="this.nombre">Bienvenido: {{nombre}}</h4>
+<div>
+  <div>
+    <b-navbar toggleable="sm" type="light" variant="dark">
+      <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
+      <!-- <div> -->
+        <div style="border-style: solid; border-color: #FFFFFF">
+            <p style="color:white; font-size:10px">&nbsp;Inactivo&nbsp;<v-idle
+              style="color:white; font-size:10px"
+              class="text-white"
+              @idle="onidle"
+              @remind="onremind"
+              :loop="true"
+              :reminders="[20]"
+              :wait="5"
+              :duration="120"/></p>
         </div>
+        <div style="border-style: solid; border-color: #FFFFFF">
+          <p style="color:white; font-size:10px">&nbsp;Sistema&nbsp;
+          <vue-time style="color:white; font-size:10px" :show-date="showDate" :show-day="showDay" :show-time="showTime" :options="options"></vue-time></p>
+        </div>
+      <!-- </div> -->
+          <div class="my-2">
+          </div>
+      <b-collapse id="nav-text-collapse" is-nav>
+        <b-navbar-nav>
+            <h4 style="color:white" v-if="this.nombre">Bienvenido: {{nombre}}</h4>
+        </b-navbar-nav>
+            <b-nav-item-dropdown text="Perfil" right class="text-white">
+            <b-dropdown-item style="width:100%" v-on:click="setinfo" to="/login" v-b-tooltip.hover title="Cerrar Sesion"><b-icon icon="power" style="color:black">
+              </b-icon></b-dropdown-item>
+            <b-dropdown-item style="width:100%" v-b-tooltip.hover title="Editar" to="/perfil"><b-icon icon="pencil" style="color:black">
+              </b-icon></b-dropdown-item>
+      </b-nav-item-dropdown>
+      </b-collapse>
+      <!-- <div class="form-group col-sm-2">
+        <div class="dropdown">
+          <b-button
+          variant="primary"
+          text="Info"
+          class="m-md-2"
+          >Perfil</b-button>
+          <div class="dropdown-content">
+            <b-button style="width:100%" variant="primary" class="btn btn-primary" v-on:click="setinfo" to="/login" v-b-tooltip.hover title="Cerrar Sesion">
+              <b-icon icon="power" style="color:white">
+              </b-icon>
+            </b-button>
+            <b-button style="width:100%" variant="primary" class="btn btn-primary" to="/perfil" v-b-tooltip.hover title="Editar">
+              
+            </b-button>
+          </div>
+        </div>
+      </div> -->
+    </b-navbar>
+  </div>
+  <nav class="nav nav-pills nav-justified" style="font-size:25px">
+    <a class="nav-item nav-link"><NuxtLink style="color:white" to="/resumen">Resumen</NuxtLink></a>
+    <a class="nav-item nav-link"><NuxtLink style="color:white" to="/admins">Administradores</NuxtLink></a>
+    <a class="nav-item nav-link"><NuxtLink style="color:white" to="/logs">Logs Servicios</NuxtLink></a>
+    <a class="nav-item nav-link"><NuxtLink style="color:white" to="/logst">Logs Tareas</NuxtLink></a>
+    <a class="nav-item nav-link"><NuxtLink style="color:white" to="/configuracion">Configuración Red</NuxtLink></a>
+  </nav>
+  <div class="header">
+    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <ul class="navbar-nav mr-auto my-2 my-lg-0">
         <div class="wrapper my-2">
             <div class="box">
                 <li>
@@ -26,61 +84,20 @@
                     <NuxtLink style="color:white" to="/logst">Logs Tareas</NuxtLink>
                 </li>
             </div>
-            <!-- <div class="box">
-                <li>
-                    <NuxtLink style="color:white" to="/red">Red</NuxtLink>
-                </li>
-            </div>
             <div class="box">
                 <li>
                     <NuxtLink style="color:white" to="/configuracion">Configuración Red</NuxtLink>
                 </li>
-            </div> -->
-            <!-- <div class="box3">
-                <li>
-                    <NuxtLink style="color:white" to="/login">Login</NuxtLink>
-                </li>
-            </div> -->
+            </div>
         </div>
       </ul>
-      <div class="form-group col-sm-2">
-        <div class="dropdown">
-          <b-button
-          variant="primary"
-          text="Info"
-          class="m-md-2"
-          ><b-icon icon="info-circle" style="color:white">
-              </b-icon></b-button>
-          <div class="dropdown-content">
-            <b-button style="width:100%" variant="primary" class="btn btn-primary" v-on:click="setinfo" to="/login" v-b-tooltip.hover title="Cerrar Sesion">
-              <b-icon icon="power" style="color:white">
-              </b-icon>
-            </b-button>
-            <!-- <b-button type="button" class="btn btn-outline-primary my-2 my-sm-0">
-              <b-icon icon="power" style="color:white">
-              </b-icon>Perfil
-            </b-button> -->
-            <b-button style="width:100%" variant="primary" class="btn btn-primary" to="/perfil" v-b-tooltip.hover title="Editar">
-              <b-icon icon="pencil" style="color:white">
-              </b-icon>
-            </b-button>
-            <!-- <b-dropdown-item href="#">Perfil</b-dropdown-item>
-            <b-dropdown-item href="#">Editar</b-dropdown-item> -->
-          </div>
-        </div>
-      </div>
-    </nav>
+    </nav> -->
     <main>
       <Nuxt />
     </main>
-    <v-idle
-      @idle="onidle"
-      @remind="onremind"
-      :loop="true"
-      :reminders="[20]"
-      :wait="5"
-      :duration="120"/>
     </div>
+
+</div>
 </template>
 <script>
 import axios from "axios";
@@ -88,7 +105,19 @@ export default {
     data: function () {
         return {
           nombre:"",
-          mensaje:null
+          mensaje:null,
+          showDate: false,
+          showDay: false,
+          showTime: true,
+          options: {
+            hour12: false,
+            timeZone: 'America/Mexico_City',
+            era: 'long',
+            weekday: 'long',
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric'
+          }
         };
     },
     components: {},
