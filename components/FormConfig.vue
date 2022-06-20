@@ -27,7 +27,7 @@
                             switches
                         ></b-form-checkbox-group>
                         </b-form-group>
-                        <b-button class="btn btn-primary" variant="primary" type="submit" :disabled="flagip">Configurar Router</b-button>
+                        <b-button class="btn btn-primary" variant="primary" type="submit" :disabled="flagip" v-on:click="configrouter">Configurar Router</b-button>
                     </div>
                 </b-card>
                 <b-card
@@ -54,7 +54,7 @@
                             switches
                         ></b-form-checkbox-group>
                         </b-form-group>
-                        <b-button class="btn btn-primary" variant="primary" type="submit" :disabled="flagipsw">Configurar Switch</b-button>
+                        <b-button class="btn btn-primary" variant="primary" type="submit" :disabled="flagipsw" v-on:click="configswitch">Configurar Switch</b-button>
                     </div>
                 </b-card>
                 <b-card 
@@ -62,7 +62,7 @@
                 v-if="permiso==4"
                 >
                     <div align="center" class="center">
-                        <b-form @submit.stop.prevent="configsserv" class="control-label text-black">
+                        <b-form @submit.stop.prevent="configservidor" class="control-label text-black">
                             <b-form-group align="center" id="input-group-2" label="IP SERVIDOR" label-for="input-2">
                                 <vue-ip style="background:#2E4053 " v-model="servidor.ip" :ip="ipsv" :on-change="changesv" theme="material"></vue-ip>
                                 <!-- <b-form-input style="width:20%" v-model="servidor.ip" id="input-1" type="text" required placeholder="ip del servidor"></b-form-input> -->
@@ -81,7 +81,7 @@
                             switches
                         ></b-form-checkbox-group>
                         </b-form-group>
-                        <b-button class="btn btn-primary" variant="primary" type="submit" :disabled="flagipsv">Configurar Servidor</b-button>
+                        <b-button class="btn btn-primary" variant="primary" type="submit" :disabled="flagipsv" v-on:click="configservidor">Configurar Servidor</b-button>
                     </div>
                 </b-card>
             </b-card-group>
@@ -95,6 +95,7 @@ export default {
     name:'FormConfig',
     data(){
         return{
+            mensaje: '',
             ip:null,
             port:'3000',
             flagip:true,
@@ -143,16 +144,61 @@ export default {
     computed:{},
     methods:{
         async configswitch(){
-
+            let adminenuso=localStorage.getItem("id");
+            let resp = `http://127.0.0.1:8000/api/scriptconfigswitch?Id_Administradores=${adminenuso}&IP_Dispositivos_Desp=${this.switches.ip}&IP_Dispositivos_Ant=${this.switches.ip}`;
+            await axios.post(resp).then((data) => {
+            // console.log(resp);
+            if (data.data.message == 'Servicio realizado con éxito') {
+                this.mensaje = data.data.message;
+                this.switches.ip="";
+                this.ipsw=null;
+                this.makeToast('success');
+            } else {
+                this.mensaje=data.data.message;
+                this.switches.ip="";
+                this.ipsw=null;
+                this.makeToast('danger');
+            }
+        });
         },
         async configrouter(){
-
+            let adminenuso=localStorage.getItem("id");
+            let resp = `http://127.0.0.1:8000/api/scriptconfigrouter?Id_Administradores=${adminenuso}&IP_Dispositivos_Desp=${this.router.ip}&IP_Dispositivos_Ant=${this.router.ip}`;
+            await axios.post(resp).then((data) => {
+            // console.log(resp);
+            if (data.data.message == 'Servicio realizado con éxito') {
+                this.mensaje = data.data.message;
+                this.router.ip="";
+                this.ip=null;
+                this.makeToast('success');
+            } else {
+                this.mensaje=data.data.message;
+                this.router.ip="";
+                this.ip=null;
+                this.makeToast('danger');
+            }
+        });
         },
-        async configsserv(){
-            
+        async configservidor(){
+            let adminenuso=localStorage.getItem("id");
+            let resp = `http://127.0.0.1:8000/api/scriptconfigservidor?Id_Administradores=${adminenuso}&IP_Dispositivos_Desp=${this.servidor.ip}&IP_Dispositivos_Ant=${this.servidor.ip}`;
+            await axios.post(resp).then((data) => {
+            // console.log(resp);
+            if (data.data.message == 'Servicio realizado con éxito') {
+                this.mensaje = data.data.message;
+                this.servidor.ip="";
+                this.ipsv=null;
+                this.makeToast('success');
+            } else {
+                this.mensaje=data.data.message;
+                this.servidor.ip="";
+                this.ipsv=null;
+                this.makeToast('danger');
+            }
+        });
         },
         change(ip, port, valid) {
-            console.log(ip, port, valid);
+            // console.log(ip, port, valid);
             if (valid) {
                 this.flagip=false;
                 this.router.ip=ip;
@@ -161,23 +207,31 @@ export default {
             }
         },
         changesw(ipsw, portsw, valid) {
-            console.log(ipsw, portsw, valid);
+            // console.log(ipsw, portsw, valid);
             if (valid) {
                 this.flagipsw=false;
-                this.router.ip=ipsw;
+                this.switches.ip=ipsw;
             }else{
                 this.flagipsw=true;
             }
         },
         changesv(ipsv, portsv, valid) {
-            console.log(ipsv, portsv, valid);
+            // console.log(ipsv, portsv, valid);
             if (valid) {
                 this.flagipsv=false;
-                this.router.ip=ipsv;
+                this.servidor.ip=ipsv;
             }else{
                 this.flagipsv=true;
             }
         },
+        makeToast(variant = null) {
+        this.$bvToast.toast(this.mensaje, {
+            title: "Mensaje",
+            variant: variant,
+            solid: true,
+            delay: 2000 
+        })
+        }
     },
     mounted: function () {
         let permisos=this.$cookies.get("tareaa").admins;

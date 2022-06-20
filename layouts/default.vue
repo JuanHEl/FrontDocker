@@ -27,8 +27,8 @@
             <h4 style="color:white" v-if="this.nombre">Bienvenido: {{nombre}}</h4>
         </b-navbar-nav>
             <b-nav-item-dropdown text="Perfil" right class="text-white">
-            <b-dropdown-item style="width:100%" v-on:click="setinfo" to="/login" v-b-tooltip.hover title="Cerrar Sesion"><b-icon icon="power" style="color:black">
-              </b-icon></b-dropdown-item>
+            <b-dropdown-item-button style="width:100%" v-on:click="setinfo" to="/login" v-b-tooltip.hover title="Cerrar Sesion"><b-icon icon="power" style="color:black">
+              </b-icon></b-dropdown-item-button>
             <b-dropdown-item style="width:100%" v-b-tooltip.hover title="Editar" to="/perfil"><b-icon icon="pencil" style="color:black">
               </b-icon></b-dropdown-item>
       </b-nav-item-dropdown>
