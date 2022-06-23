@@ -63,7 +63,7 @@ export default {
     },
     methods: {},
     mounted: function () {
-        let disp = "http://127.0.0.1:8000/api/dipositivo";
+        let disp = "http://127.0.0.1:8008/api/dipositivo";
         axios.get(disp).then((data) => {
             this.logs = data.data;
             console.log(this.logs.data);
